@@ -32,9 +32,9 @@
 - ✅ 支持ChatGPT试的超链模型切换 https://chat.openai.com/g/g-2fkFE8rbu 修改为 https://vercel.ddaiai.com/#/g/g-2fkFE8rbu
 - ✅ chatgpt 支持 GPTs 多模态
 - ✅ chatgpt 支持 tts whisper
+- ✅ 即时语音识别(浏览器自带语音识别 ASR) `v2.15.7`以上版本
 - ✅ 支持超链更换设置，适合 one-api 部署聊天 https://vercel.ddaiai.com/#/s/t?OPENAI_API_BASE_URL=https://abc.com&OPENAI_API_KEY=sk-xxxxx&MJ_SERVER=https://abc.com&MJ_API_SECRET=sk-xxx&UPLOADER_URL=
 - ✅ 支持one-api部署聊天 https://vercel.ddaiai.com/#/?settings={%22key%22:%22sk-abc%22,%22url%22:%22https://www.abc.com%22} `(v.2.14.3)`
-
 ## 待开发
 - ⏰ 支持 GPTs 多模态
 
@@ -159,20 +159,22 @@ R2_KEY_ID=
 R2_KEY_SECRET=
 ```
 ## 文件服务器请求优先顺序
-
 R2> 前端UI设置文件服务> 后端文件服务 >跟随中转
 ## 防爆破验证设置
-- vercel 不支持；仅支持Docker化部署
-- 参数如下
+
+![防爆破](./docs/check_error.jpg)
+- [x] vercel 不支持；仅支持Docker化部署
+- [x] 如果前面挂载 `nginx` 请配置 `proxy_set_header   X-Forwarded-For  $remote_addr;`
+- [x] 参数如下: 错误验证3次，只能在10分钟后再验证
 ```yml
 # Secret key 注意: 只能拿事英文+数字
-AUTH_SECRET_KEY=
+AUTH_SECRET_KEY=my888god
 #爆破：验证次数 注意: 数字 ；nginx 请设置  proxy_set_header   X-Forwarded-For  $remote_addr;
-AUTH_SECRET_ERROR_COUNT=
+AUTH_SECRET_ERROR_COUNT=3
 #爆破：验证停留时间 单位分钟 注意: 是数字
-AUTH_SECRET_ERROR_TIME=
+AUTH_SECRET_ERROR_TIME=10
 ```
-- 脚本如下
+- [x] 脚本如下
 ```shell
 docker run --name chatgpt-web-midjourney-proxy  -d -p 6015:3002 \
 -e OPENAI_API_KEY=sk-xxxxx \
@@ -188,6 +190,19 @@ docker run --name chatgpt-web-midjourney-proxy  -d -p 6015:3002 \
 MIT © [Dooy](./license)
 
 ## 其他
-如果觉得这个项目对您有所帮助，请帮忙点个star
+如果觉得这个项目对您有所帮助，请帮忙点个star 或者捐助我们
 
 [![Star History Chart](https://api.star-history.com/svg?repos=Dooy/chatgpt-web-midjourney-proxy&type=Date)](https://star-history.com/#Dooy/chatgpt-web-midjourney-proxy&Date)
+
+## 捐助
+如果我的开源项目对你有帮助，请考虑通过以下任意一种方式赞助: 
+<div style="display: flex; flex-wrap: wrap">
+    <div style="width:200px">
+        <img src="./docs/wxpay.jpg"  style="width:200px">
+        <div>微信捐助</div>
+    </div>
+    <div style="width:200px">
+        <img src="./docs/alipay.jpg"  style="width:200px"> 
+        <div>支付宝捐助</div>
+    </div>
+</div>
